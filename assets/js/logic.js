@@ -59,6 +59,7 @@ function startQuiz() {
     showQuestion();
 }
 
+// Function to show the questions
 function showQuestion() {
     const currentQuestion = questions[currentQuestionIndex];
     const questionTitle = document.getElementById('question-title');
@@ -75,55 +76,98 @@ function showQuestion() {
     });
 }
 
+// Function to check the answer and give feedback
+function checkAnswer(selectedOption) {
+    const currentQuestion = questions[currentQuestionIndex];
 
+    if (selectedOption === currentQuestion.correctAnswer) {
+        // Correct answer
+        showFeedback('Correct!', true);
+    } else {
+        // Incorrect answer
+        showFeedback('Incorrect!', false);
+        // Subtract 10 seconds for incorrect answer
+        timeRemaining = Math.max(0, timeRemaining - 10);
+    }
+    // set a timer to show feedback before moving to next question
+    setTimeout(() => {
+    // Move to the next question
+    currentQuestionIndex++;
 
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            // Quiz completed
+            endQuiz();
+        }
+    }, 1000); // Delay the next question by 1 second
+}
 
-// * A start button that when clicked a timer starts and the first question appears.
- 
-//   * Questions contain buttons for each answer.
-//   * 
-//   * When answer is clicked, the next question appears
-//   * 
-//   * If the answer clicked was incorrect then subtract time from the clock
+// Function to show the feedback
+function showFeedback(message, isCorrect) {
+    const feedbackContainer = document.getElementById('feedback');
+    feedbackContainer.textContent = message;
 
-// * The quiz should end when all questions are answered or the timer reaches 0.
+    if (isCorrect) {
+        feedbackContainer.style.color = 'green';
+    } else {
+        feedbackContainer.style.color = 'red';
+    }
 
-//   * When the game ends, it should display their score and give the user the ability to save their initials and their score
+    feedbackContainer.classList.remove('hide');
+    // Timer to hide before next question is shown
+    setTimeout(() => {
+        feedbackContainer.classList.add('hide');
+    }, 1000);
+}
 
-// Set of questions --> Array of objects
-// Each Question needs the following:
-// Question Text
-// set of answers
-// which answer is correct
+// Acceptance Criteria
+    // A start button that when clicked a timer starts and the first question appears.
+        // Questions contain buttons for each answer.
+        // 
+        // When answer is clicked, the next question appears
+        //  
+        // If the answer clicked was incorrect then subtract time from the clock
+        //
+        // The quiz should end when all questions are answered or the timer reaches 0.
+        //
+        // When the game ends, it should display their score and give the user the ability to save their initials and their score
 
-// Landing page:
-// Explanation of the quiz
-// start button
+// Pseudo Code
+    // Set of questions --> Array of objects
+    // Each Question needs the following:
+        // Question Text
+        // set of answers
+        // which answer is correct
 
-// Click the start button:
-// landing pages goes away
-// The timer starts
-// The first question appears (With its answers)
+    // Landing page:
+        // Explanation of the quiz
+        // start button
 
-// For each question:
-// user clicks an answer
-// theri choice is compared to the correct answer as stored in the question object
-// If correct, tell them
-// If incorrect, tell them and subtract 10 sec from the timer
-// Optional Play a sound for correct or incorrect
-// Either way, the question disappears after a few seconds and the next questions appear
+    // Clicking the start button:
+        // landing pages goes away
+        // The timer starts
+        // The first question appears (With its answers)
 
-// After the last question: 
- // Timer stops
- // Question Disappears
- // Form appears for user to enter their initials
- // Display their score
+    // For each question:
+        // user clicks an answer
+        // their choice is compared to the correct answer as stored in the question object
+        // If correct, give feedback
+        // If incorrect, give feedback and subtract 10 sec from the timer
+        // Optional - Play a sound for correct or incorrect
+        // Either way, the question disappears after a few seconds and the next questions appear
 
-// User submits form
-// Initials and score gets stored in local storage
-// User is take to the high score page
-// High scores are listed, sorted highest to lowest
-// User has option to take the quiz again
+    // After the last question: 
+        // Timer stops
+        // Question Disappears
+        // Form appears for user to enter their initials
+        // Display their score
+
+    // User submits form
+        // Initials and score gets stored in local storage
+        // User is take to the high score page
+        // High scores are listed, sorted highest to lowest
+        // User has option to take the quiz again
 
 
 
