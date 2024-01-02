@@ -121,6 +121,17 @@ function showFeedback(message, isCorrect) {
     }, 1000);
 }
 
+function endQuiz() {
+    clearInterval(timer);
+
+    // Display the end screen
+    document.getElementById('questions').classList.add('hide');
+    document.getElementById('end-screen').classList.remove('hide');
+
+    // Display final score
+    document.getElementById('final-score').textContent = timeRemaining;
+}
+
 // Acceptance Criteria
     // A start button that when clicked a timer starts and the first question appears.
         // Questions contain buttons for each answer.
