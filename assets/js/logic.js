@@ -37,6 +37,7 @@ const timerElement = document.getElementById('time');
 let timer; // For time
 let timeRemaining = 60; // Initial time of 60 seconds
 let currentQuestionIndex = 0; // To keep track of question
+const submitButton = document.getElementById('submit'); // For Button to submit score
 
 startButton.addEventListener('click', startQuiz);
 
@@ -131,6 +132,28 @@ function endQuiz() {
     // Display final score
     document.getElementById('final-score').textContent = timeRemaining;
 }
+
+submitButton.addEventListener('click', submitScore);
+
+// function to store the scores in local storage
+function submitScore() {
+    const initialsInput = document.getElementById('initials');
+    const userInitials = initialsInput.value.trim().toUpperCase();
+
+    if (userInitials !== "") {
+        const highscores = JSON.parse(localStorage.getItem('highscores')) || [];
+        const userScore = { initials: userInitials, score: timeRemaining };
+
+        highscores.push(userScore);
+        highscores.sort((a, b) => b.score - a.score); // Sort scores in descending order
+
+        localStorage.setItem('highscores', JSON.stringify(highscores));
+
+        // Redirect to highscores page
+        window.location.href = 'highscores.html';
+    }
+}
+
 
 // Acceptance Criteria
     // A start button that when clicked a timer starts and the first question appears.
